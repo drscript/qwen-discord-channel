@@ -127,6 +127,20 @@ qwen channel pairing approve discord <CODE>
 
 Everything after that goes straight to the agent.
 
+## Watching the agent work
+
+- **Typing indicator** — Discord shows the bot typing while a prompt is running.
+- **Tool activity lines** — each tool call posts one short line as it starts
+  (`🔧 shell: npm test`), plus a `❌` line if a tool fails.
+- **Block streaming** — with `"blockStreaming": "on"` in the channel config, the response
+  arrives as several shorter messages while the agent works, instead of one big reply at the
+  end. Tune with `blockStreamingChunk` / `blockStreamingCoalesce`.
+- **Permission relay** — when a tool needs approval, the request (with approve/deny options)
+  lands in the chat, so you also see *what* the agent is about to do.
+- **`/status`** — shows the session's current state; `/help` lists everything available.
+- **Service logs** — the terminal running `qwen channel start` logs gateway and pipeline
+  activity, including preflight rejections (e.g. `reason=group_disabled`).
+
 ## Security notes
 
 - The agent executes real tools on your machine — treat the bot like a remote shell.

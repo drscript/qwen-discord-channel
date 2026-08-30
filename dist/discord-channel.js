@@ -128,6 +128,21 @@ export class DiscordChannel extends ChannelBase {
         clearInterval(interval);
         this.typingIntervals.delete(chatId);
     }
+    /** One activity line per tool call; statuses repeat per toolCallId, so dedupe. */
+    announcedToolCalls = new Set();
+    onToolCall(chatId, event) {
+        const label = (prefix) => `${prefix} ${event.kind || "tool"}: ${event.title}`.slice(0, 300);
+        if (event.status === "in_progress" || event.status === "pending") {
+            if (this.announcedToolCalls.has(event.toolCallId)) {
+                return;
+            }
+            this.announcedToolCalls.add(event.toolCallId);
+            void this.sendMessage(chatId, label("🔧")).catch(() => { });
+        }
+        else if (event.status === "failed") {
+            void this.sendMessage(chatId, label("❌")).catch(() => { });
+        }
+    }
     async onMessage(msg) {
         if (msg.author.bot || !this.client.user) {
             return;

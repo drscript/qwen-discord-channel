@@ -9,6 +9,7 @@ import {
   type ChannelConfig,
   type Envelope,
   type SessionTarget,
+  type ToolCallEvent,
 } from "@qwen-code/channel-base";
 import {
   Client,
@@ -171,6 +172,23 @@ export class DiscordChannel extends ChannelBase {
     }
     clearInterval(interval);
     this.typingIntervals.delete(chatId);
+  }
+
+  /** One activity line per tool call; statuses repeat per toolCallId, so dedupe. */
+  private readonly announcedToolCalls = new Set<string>();
+
+  override onToolCall(chatId: string, event: ToolCallEvent): void {
+    const label = (prefix: string) =>
+      `${prefix} ${event.kind || "tool"}: ${event.title}`.slice(0, 300);
+    if (event.status === "in_progress" || event.status === "pending") {
+      if (this.announcedToolCalls.has(event.toolCallId)) {
+        return;
+      }
+      this.announcedToolCalls.add(event.toolCallId);
+      void this.sendMessage(chatId, label("🔧")).catch(() => {});
+    } else if (event.status === "failed") {
+      void this.sendMessage(chatId, label("❌")).catch(() => {});
+    }
   }
 
   private async onMessage(msg: Message): Promise<void> {
