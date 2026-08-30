@@ -1,0 +1,26 @@
+{
+  "name": "qwen-discord-channel",
+  "version": "1.0.0",
+  "description": "Discord channel plugin for Qwen Code — drive the agent from Discord DMs and guild channels.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drscript/qwen-discord-channel.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@qwen-code/channel-base": "0.22.2",
+    "discord.js": "^14.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

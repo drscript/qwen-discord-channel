@@ -1,0 +1,12 @@
+{
+  "name": "qwen-discord-channel",
+  "version": "1.0.0",
+  "displayName": "Qwen Discord Channel",
+  "description": "Discord channel plugin for Qwen Code — drive the agent from Discord DMs and guild channels.",
+  "channels": {
+    "discord": {
+      "entry": "dist/index.js",
+      "displayName": "Discord"
+    }
+  }
+}
