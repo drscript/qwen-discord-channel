@@ -83,7 +83,7 @@ Add a channel entry to `~/.qwen/settings.json`:
       "senderPolicy": "pairing",
       "sessionScope": "user",
       "cwd": "/path/to/working/directory",
-      "groupPolicy": "disabled",
+      "groupPolicy": "open",
       "dmPolicy": "open",
       "groups": { "*": { "requireMention": true } }
     }
