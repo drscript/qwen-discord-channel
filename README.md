@@ -22,6 +22,9 @@ anywhere.
   files/attachments are downloaded and handed to the agent as file paths.
 - **Working indicators** — Discord typing indicator while the agent thinks.
 - **Slash commands** — `/help`, `/status`, `/clear`, `/cancel`, `/loop …` out of the box.
+  These are plain-text commands parsed by the channel pipeline, *not* Discord native
+  application commands — you type them as ordinary messages, and the `applications.commands`
+  OAuth scope is not required.
 - **Permission relay** — when the agent needs tool approval, the request lands in the chat and
   you answer it there.
 
@@ -64,6 +67,8 @@ Restart Qwen Code if the extension isn't visible yet (`qwen extensions list` sho
 
 5. **OAuth2 → URL Generator**: scope `bot`; permissions **View Channels**, **Send Messages**,
    **Read Message History**. Open the generated URL and invite the bot to a (private) server.
+   The `applications.commands` scope is not needed — the slash commands in this doc are
+   plain-text messages, not native application commands.
 
 ## Configuration
 
